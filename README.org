@@ -94,7 +94,8 @@ This package provides
   - +This package does not work well with modes basde on ~emacs-modules~ such+
      +as [[https://github.com/akermu/emacs-libvterm][vterm]] using mode-hook mechanism to set themes. Interactively invoke+
      +~anchor-theme-buffer-local~ still works, but it requires manual+
-     +operation for the time being.+ 
+     +operation for the time being.+  But setting ANSI color does not work in
+     ~vterm~
   - This package currently does not work well with some add-on themes such as
     [[https://github.com/AnthonyDiGirolamo/airline-themes][airline-themes]]
 
