@@ -1,12 +1,12 @@
-;;; anchor-theme-buffer-local.el  -*- lexical-binding: t -*- 
+;;; anchor-theme-buffer-local.el --- Apply theme in current buffer only -*- lexical-binding: t -*-
 ;; 
 ;; Copyright (C) 2021 Free Software Foundation, Inc.
 ;;
 ;; ------------------------------------------------------------------------------
 ;; Author: Liāu, Kiong-Gē <gongyi.liao@gmail.com>
-;; Version: 0.0.1a 
+;; Version: 0.0.1a
 ;; Package-Requires: ((emacs "26"))
-;; Keywords: extensions, lisp, theme 
+;; Keywords: extensions, lisp, theme
 ;; Homepage: https://github.com/GongYiLiao/anchor-theme-buffer-local
 ;; ------------------------------------------------------------------------------
 ;;
@@ -23,7 +23,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ;; 
-;;; Commentary
+;;; Commentary:
 ;; 
 ;; Using `face-remap's `face-remap-set-base function to set buffer-specific
 ;; custom theme
@@ -39,47 +39,50 @@
 
 ;; 
 (defun anchor-theme-get-faces (theme)
-  "Extract all the theme-face values from THEME"
+  "Extract all the theme-face values from THEME."
   ;; take only theme-face specs
   (cl-remove-if #'(lambda (spec) (not (eq (car spec) 'theme-face)))
 		;; the theme's all the face/value specs
-		(get theme 'theme-settings))) 
+		(get theme 'theme-settings)))
 
 ;;
 (defun anchor-theme-spec-choose (face-spec)
   "Choose applicable face settings.
 It uses the condition specified in a face spec and use 'face-spec-choose'
-function from face-remap.el"
+function from face-remap.el
+Argument FACE-SPEC: the specs to be tested"
   ;; a face's all applicable specs, along with their applicable conditions
   (let ((face-spec-content (nth 3 face-spec)))
     (list (nth 1 face-spec) ;; the face name
 	  ;; the applicable face spec chosen by 'face-spec-choose'
-	  (face-spec-choose face-spec-content)))) 
+	  (face-spec-choose face-spec-content))))
 
 ;; 
 (defun anchor-theme-buffer-local (theme)
   "Extract applicable face settings from THEME.
 It uses 'face-remap-set-base' to load that theme in a buffer local manner"
-  ;; make sure the theme is available  
+  ;; make sure the theme is available
   (load-theme theme t t)
-  ;; set buffer face with 
+  ;; set buffer face with
   (mapc (lambda (spec) (apply #'anchor-theme-set-base spec))
 	;; ignore faces without applicable specs
 	(remove 'nil
 		;; filter out non-applicable specs
 		(mapcar #'anchor-theme-spec-choose
-			;; get the theme-face specs from the theme 
+			;; get the theme-face specs from the theme
 			(anchor-theme-get-faces theme)))))
 
 
 ;; 
 (defmacro anchor-theme-hook-gen (theme &rest other-step)
-  "Generate hook functions"
+  "Generate hook functions.
+Argument THEME the theme to be applied in the mode hook .
+Optional argument OTHER-STEP the additional steps to execute in the mode hook."
   `(lambda nil
-     ;; face-remap current buffer with theme 
+     ;; face-remap current buffer with theme
      (anchor-theme-buffer-local ,theme)
      ;; other sides effect applicable to the current buffer
-     ,@other-step))                	
+     ,@other-step))
 
 ;; 
 (provide 'anchor-theme-buffer-local)
