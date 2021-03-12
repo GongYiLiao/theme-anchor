@@ -1,4 +1,4 @@
-#+title: ~anchor-theme-buffer-local~
+goo#+title: ~anchor-theme-buffer-local~
 #+author: Liāu, Kiong-Gē
 #+email:  gongyi.liao@gmail.com
 
@@ -87,8 +87,7 @@ This package provides
      
 * Limitations
 
-  - The ~anchor-theme-buffer-local~ currently does not support interactive
-    function call yet 
+  - +The ~anchor-theme-buffer-local~ currently does not support interactivefunction call yet+ 
   - This package can only process ~theme-face~. ~theme-value~, which should be
     only changed via customization interface and that is out of this package's
     scope
