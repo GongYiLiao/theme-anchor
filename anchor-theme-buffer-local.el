@@ -62,6 +62,14 @@ Argument FACE-SPEC: the specs to be tested"
   "Extract applicable face settings from THEME.
 It uses 'face-remap-set-base' to load that theme in a buffer local manner"
   ;; make sure the theme is available
+  (interactive
+   (list
+    (intern (completing-read "Load custom theme: "
+                             (mapcar #'symbol-name
+				     (custom-available-themes))))))
+  (unless (custom-theme-name-valid-p theme)
+    (error "Invalid theme name `%s'" theme))
+  ;; 
   (load-theme theme t t)
   ;; set buffer face with
   (mapc (lambda (spec) (apply #'face-remap-set-base spec))
