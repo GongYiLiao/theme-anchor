@@ -88,7 +88,7 @@ This package provides
 * Limitations
 
   - The ~anchor-theme-buffer-local~ currently does not support interactive
-    function yet 
+    function call yet 
   - This package can only process ~theme-face~. ~theme-value~, which should be
     only changed via customization interface and that is out of this package's
     scope
