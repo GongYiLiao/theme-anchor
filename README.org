@@ -113,8 +113,8 @@ This package provides
   which I had used since ~Emacs~ version 26.1. It relies on ~flet~ for
   dynamic binding but the deprecation of ~flet~ in recent Emacs releases
   and development branches prevents it from working properly even with [[https://github.com/nicferrier/emacs-noflet][noflet]].
-  But the most important factor is: it's now unmaintained. This package aims
-  to solve the same problem ~color-theme-buffer-local~ aimed to solve but
+  However the most important factor is: it's now unmaintained. This package
+  aims to solve the same problem ~color-theme-buffer-local~ aimed to solve but
   with less use of dynamic binding and without any dependency of third-party
   packages. 
 
