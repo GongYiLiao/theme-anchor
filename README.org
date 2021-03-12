@@ -6,7 +6,7 @@ goo#+title: ~anchor-theme-buffer-local~
 
 This package provides
 
-- functions to apply an ~emacs~ *custom theme* to current buffer only
+- functions to apply an ~emacs~ [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Custom-Themes.html][custom theme]] to current buffer only
 - a function to generate side-effect only functions as mode hooks 
 
 #+CAPTION: Every buffer has it own theme
