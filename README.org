@@ -1,4 +1,4 @@
-goo#+title: ~anchor-theme-buffer-local~
+#+title: ~anchor-theme-buffer-local~
 #+author: Liāu, Kiong-Gē
 #+email:  gongyi.liao@gmail.com
 
