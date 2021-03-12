@@ -64,7 +64,7 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
   ;; make sure the theme is available
   (load-theme theme t t)
   ;; set buffer face with
-  (mapc (lambda (spec) (apply #'anchor-theme-set-base spec))
+  (mapc (lambda (spec) (apply #'face-remap-set-base spec))
 	;; ignore faces without applicable specs
 	(remove 'nil
 		;; filter out non-applicable specs
