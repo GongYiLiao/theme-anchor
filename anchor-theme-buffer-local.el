@@ -28,8 +28,9 @@
 ;; Using `face-remap's `face-remap-set-base function to set buffer-specific
 ;; custom theme
 ;; 
-
+;; 
 ;;; Code:
+
 ;; 
 (require 'cl-lib)  			;; for 'cl-remove-if'
 (require 'faces) 			;; for 'face-spec-choose'
