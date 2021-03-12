@@ -1,12 +1,35 @@
-;; -*- lexical-binding: t -*- 
+;;; anchor-theme-buffer-local.el  -*- lexical-binding: t -*- 
+;; 
+;; Copyright (C) 2021 Free Software Foundation, Inc.
+;;
 ;; ------------------------------------------------------------------------------
-;; File name:   anchor-theme-buffer-local.el
-;; Purpose  :   Using `face-remap's `face-remap-set-base function to set
-;;              buffer-specific custom theme
-;; Created by:  Liāu, Kiong-Gē <gongyi.liao@gmail.com>
-;; License:     FSF GNU GPL V3 or newer
+;; Author: Liāu, Kiong-Gē <gongyi.liao@gmail.com>
+;; Version: 0.0.1a 
+;; Package-Requires: ((emacs "26"))
+;; Keywords: extensions, lisp, theme 
+;; Homepage: https://github.com/GongYiLiao/anchor-theme-buffer-local
 ;; ------------------------------------------------------------------------------
+;;
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;; 
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;; 
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+;; 
+;;; Commentary
+;; 
+;; Using `face-remap's `face-remap-set-base function to set buffer-specific
+;; custom theme
+;; 
 
+;;; Code:
 ;; 
 (require 'cl-lib)  			;; for 'cl-remove-if'
 (require 'faces) 			;; for 'face-spec-choose'
@@ -60,6 +83,5 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
 ;; 
 (provide 'anchor-theme-buffer-local)
 
-;; ------------------------------------------------------------------------------
-;;   End of 'anchor-theme-buffer-local
-;; ------------------------------------------------------------------------------
+;;; anchor-theme-buffer-local.el ends here
+
