@@ -91,10 +91,10 @@ This package provides
   - This package can only process ~theme-face~. ~theme-value~, which should be
     only changed via customization interface and that is out of this package's
     scope
-  - This package does not work well with modes basde on ~emacs-modules~ such
-    as [[https://github.com/akermu/emacs-libvterm][vterm]] using mode-hook mechanism to set themes. Interactively invoke
-    ~anchor-theme-buffer-local~ still works, but it requires manual operation 
-    for the time being. 
+  - +This package does not work well with modes basde on ~emacs-modules~ such+
+     +as [[https://github.com/akermu/emacs-libvterm][vterm]] using mode-hook mechanism to set themes. Interactively invoke+
+     +~anchor-theme-buffer-local~ still works, but it requires manual+
+     +operation for the time being.+ 
   - This package currently does not work well with some add-on themes such as
     [[https://github.com/AnthonyDiGirolamo/airline-themes][airline-themes]]
 
