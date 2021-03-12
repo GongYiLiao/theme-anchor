@@ -69,7 +69,7 @@ This package provides
     If the emacs process runs in a GUI environment, the first specification will
     be used as the ~(type graphic)~  requirement is satisified ; if it runs in 
     a tty terminal that only supports up to 16 colors, the third specification
-    will be used as due to even the second condition ~(min-colors 256)~ is not
+    will be used due to even the second condition ~(min-colors 256)~ is not
     fulfilled. 
      
     Some themes may have some ~theme-face~ mis-specified like the following
