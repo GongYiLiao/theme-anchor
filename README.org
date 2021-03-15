@@ -30,7 +30,7 @@ This package provides
 
    This function supports interactive mode through =M-x anchor-theme-buffer-local=
    
-** ~anchor-theme-buffer-local~
+** ~anchor-theme-hook-gen~
 
    This macro generates functions those can setup mode-specific buffer
    appearance as well as turn on/off some  applicable features. 
