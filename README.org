@@ -3,7 +3,6 @@
 #+email:  gongyi.liao@gmail.com
 
 
-
 This package provides
 
 - functions to apply an ~emacs~ [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Custom-Themes.html][custom theme]] to current buffer only
@@ -18,7 +17,7 @@ This package provides
 
 ** ~anchor-theme-buffer-local~ 
 
-   This function apply a theme to current buffer without affecting other buffers.
+   This function apply a theme to the current buffer without affecting other buffers.
 
    The following example make ~tange~ theme effective in current buffer without
    changing any face settings in other buffers. 
@@ -29,6 +28,8 @@ This package provides
 
    #+end_src 
 
+   This function supports interactive mode through =M-x anchor-theme-buffer-local=
+   
 ** ~anchor-theme-buffer-local~
 
    This macro generates functions those can setup mode-specific buffer
