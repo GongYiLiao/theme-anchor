@@ -42,9 +42,9 @@ This package provides
 
      (add-hook 'emacs-lisp-mode-hook
 	       (anchor-theme-hook-gen 'adwaita
-				      (show-paren-mode t)
-				      (setq-local show-paren-style 'expression)
-				      (electric-pair-local-mode t)))
+                                      (show-paren-mode t)
+                                      (setq-local show-paren-style 'expression)
+                                      (electric-pair-local-mode t)))
 
    #+end_src 
     
@@ -62,12 +62,12 @@ This package provides
     #+begin_src emacs-lisp
 
       (theme-face default base16-default-light
-		  ((((type graphic))
-		    (:foreground "#383838" :background "#f8f8f8"))
-		   (((min-colors 256))
-		    (:foreground "white" :background "black"))
-		   (t
-		    (:foreground "white" :background "black"))))
+                  ((((type graphic))
+                    (:foreground "#383838" :background "#f8f8f8"))
+                   (((min-colors 256))
+                    (:foreground "white" :background "black"))
+                    (t
+                     (:foreground "white" :background "black"))))
 
     #+end_src 
 
