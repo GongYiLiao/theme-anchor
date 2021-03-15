@@ -9,7 +9,7 @@ This package provides
 - a function to generate side-effect only functions as mode hooks 
 
 The following screenshot shows one frame split into 4 buffers (as /windows/ in
-=emacs='s defintion), each buffer shows its own theme
+=emacs='s defintion), each buffer shows its own theme. 
   
 #+CAPTION: Every buffer has it own theme
 #+NAME: fig:Emacs-with-anchor-themes-0 
