@@ -91,7 +91,9 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
 		;; filter out non-applicable specs
 		(mapcar #'theme-anchor-spec-choose
 			;; get the theme-face specs from the theme
-			(theme-anchor-get-faces theme)))))
+			(theme-anchor-get-faces theme))))
+  ;; set the theme-values as well 
+  (theme-anchor-set-values theme))
 
 (defmacro theme-anchor-hook-gen (theme &rest other-step)
   "Generate hook functions.
@@ -100,7 +102,6 @@ Optional argument OTHER-STEP the additional steps to execute in the mode hook."
   `(lambda nil
      ;; face-remap current buffer with theme
      (theme-anchor-buffer-local ,theme)
-     (theme-anchor-set-values ,theme)
      ;; other sides effect applicable to the current buffer
      ,@other-step))
 
