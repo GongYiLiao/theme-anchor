@@ -43,6 +43,26 @@
 		;; the theme's all the face/value specs
 		(get theme 'theme-settings)))
 
+(defun theme-anchor-get-values (theme)
+  ""
+  "Extract all the theme-face values from THEME."
+  ;; take only theme-face specs
+  (mapcar (lambda (spc) `(,(nth 1 spc) ,(nth 3 spc)))
+	  (cl-remove-if (lambda (spc) (not (eq (car spc) 'theme-value)))
+			;; the theme's all the face/value specs
+			(get theme 'theme-settings))))
+
+
+(defun theme-anchor-set-values (theme)
+  "Set buffer-local values using theme-values extracted from THEME"
+  (let ((val-specs (theme-anchor-get-values theme)))
+    (mapc (lambda (spc)
+	    (eval `(setq-local ,(car spc) ,(nth 1 spc)))
+	    (if (eq (car spc) 'ansi-color-names-vector)
+		(setq-local  ansi-color-map (ansi-color-make-color-map))))
+	  val-specs)))
+
+
 (defun theme-anchor-spec-choose (face-spec)
   "Choose applicable face settings.
 It uses the condition specified in a face spec and use 'face-spec-choose'
