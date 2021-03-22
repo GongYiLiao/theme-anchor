@@ -45,7 +45,6 @@
 		(get theme 'theme-settings)))
 
 (defun theme-anchor-get-values (theme)
-  ""
   "Extract all the theme-face values from THEME."
   ;; take only theme-face specs
   (mapcar (lambda (spc) `(,(nth 1 spc) ,(nth 3 spc)))
@@ -104,6 +103,7 @@ Optional argument OTHER-STEP the additional steps to execute in the mode hook."
   `(lambda nil
      ;; face-remap current buffer with theme
      (theme-anchor-buffer-local ,theme)
+     (theme-anchor-set-values ,theme)
      ;; other sides effect applicable to the current buffer
      ,@other-step))
 
