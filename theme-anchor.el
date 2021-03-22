@@ -52,7 +52,8 @@
 			(get theme 'theme-settings))))
 
 (defun theme-anchor-set-values (theme)
-  "Set buffer-local values using theme-values extracted from THEME"
+  "Set buffer-local values using theme-values extracted from THEME
+Argument THEME: the theme to extract `theme-value's from"
   (let ((val-specs (theme-anchor-get-values theme)))
     (mapc (lambda (spc)
 	    (eval `(setq-local ,(car spc) ,(nth 1 spc)))
