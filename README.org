@@ -8,6 +8,9 @@ This package provides
 - functions to apply an ~emacs~ [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Custom-Themes.html][custom theme]] to current buffer only
 - a function to generate side-effect only functions as mode hooks 
 
+The following screenshot shows one frame split into 4 buffers (as /windows/ in
+=emacs='s defintion), each buffer shows its own theme. 
+  
 #+CAPTION: Every buffer has it own theme
 #+NAME: fig:Emacs-with-anchor-themes-0 
 [[./Emacs-with-anchor-themes-0.png]]
@@ -113,14 +116,13 @@ This package provides
   looks monotonic in style.
    
 
-  The name suffix ~-buffer-local~ is borrowed from [[https://github.com/vic/color-theme-buffer-local][load-theme-buffer-local]], 
-  which I had used since ~Emacs~ version 26.1. It relies on ~flet~ for
-  dynamic binding but the deprecation of ~flet~ in recent Emacs releases
-  and development branches prevents it from working properly even with [[https://github.com/nicferrier/emacs-noflet][noflet]].
-  However the most important factor is: it's now unmaintained. This package
-  aims to solve the same problem ~load-theme-buffer-local~ aimed to solve but
-  with less use of dynamic binding and without any dependency of third-party
-  packages. 
+  The name suffix ~-buffer-local~ is borrowed from [[https://github.com/vic/color-theme-buffer-local][load-theme-buffer-local]] (which
+  is unfortunately orphaned/looking for maintainer now) that I had used since ~Emacs~
+  version 26.1. =load-theme-buffer-local= relies on ~flet~ for dynamic binding but the
+  deprecation of ~flet~ in recent Emacs releases and development branches prevents it
+  from working properly even with [[https://github.com/nicferrier/emacs-noflet][noflet]]. This package aims to solve the same problem
+  ~load-theme-buffer-local~ aimed to solve but without use of dynamic binding as well
+  as any third-party package dependency. 
 
 
    
@@ -128,4 +130,3 @@ This package provides
 
   The use of this package is granted under [[https://www.gnu.org/licenses/gpl-3.0.en.html][Free Software Foundation's GNU
   General Public License, Version 3]] (or newer). 
-
