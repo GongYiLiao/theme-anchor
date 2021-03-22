@@ -7,7 +7,7 @@
 This package provides
 
 - functions to apply an ~emacs~ [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Custom-Themes.html][custom theme]] to current buffer only
-- a function to generate side-effect only functions as mode hooks 
+- a macro to generate side-effect only functions as mode hooks 
 
 The following screenshot shows one frame split into 4 buffers (as /windows/ in
 =emacs='s defintion), each buffer shows its own theme. 
