@@ -93,7 +93,12 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
     If an invalid face specification is detected, this function will report an
     error and aborts any further execution of the function. 
 
-     
+*** =theme-anchor-get-values=
+    Get =theme-values='s from a theme
+
+*** =theme-anchor-set-values=
+    Use =setq-local= to set theme values extract from the them in the current buffer only 
+    
 * Limitations
 
   - +The ~theme-anchor-buffer-local~ currently does not support interactivefunction call yet+ 
