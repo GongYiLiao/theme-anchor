@@ -1,10 +1,10 @@
 ;;; anchor-theme.el --- Apply theme in current buffer only -*- lexical-binding: t -*-
 ;; 
-;; Copyright (C) 2021 Free Software Foundation, Inc.
+;; Copyright (C) 2021 Liāu, Kiong-Gē
 ;;
 ;; ------------------------------------------------------------------------------
 ;; Author: Liāu, Kiong-Gē <gongyi.liao@gmail.com>
-;; Version: 0.0.1a
+;; SPDX-License-Identifier: GPL-3.0-or-later
 ;; Package-Requires: ((emacs "26"))
 ;; Keywords: extensions, lisp, theme
 ;; Homepage: https://github.com/GongYiLiao/anchor-theme-buffer-local
