@@ -1,4 +1,4 @@
-;;; theme-archor.el --- Apply theme in current buffer only -*- lexical-binding: t -*-
+;;; theme-anchor.el --- Apply theme in current buffer only -*- lexical-binding: t -*-
 ;; 
 ;; Copyright (C) 2021 Liāu, Kiong-Gē
 ;;
@@ -38,7 +38,7 @@
 (require 'face-remap) 			;; for 'face-remap-set-base'
 
 ;; 
-(defun theme-archor-get-faces (theme)
+(defun theme-anchor-get-faces (theme)
   "Extract all the theme-face values from THEME."
   ;; take only theme-face specs
   (cl-remove-if (lambda (spec) (not (eq (car spec) 'theme-face)))
@@ -46,7 +46,7 @@
 		(get theme 'theme-settings)))
 
 ;;
-(defun theme-archor-spec-choose (face-spec)
+(defun theme-anchor-spec-choose (face-spec)
   "Choose applicable face settings.
 It uses the condition specified in a face spec and use 'face-spec-choose'
 function from face-remap.el
@@ -58,7 +58,7 @@ Argument FACE-SPEC: the specs to be tested"
 	  (face-spec-choose face-spec-content))))
 
 ;; 
-(defun theme-archor-buffer-local (theme)
+(defun theme-anchor-buffer-local (theme)
   "Extract applicable face settings from THEME.
 It uses 'face-remap-set-base' to load that theme in a buffer local manner"
   ;; make sure the theme is available
@@ -76,19 +76,19 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
 	;; ignore faces without applicable specs
 	(remove 'nil
 		;; filter out non-applicable specs
-		(mapcar #'theme-archor-spec-choose
+		(mapcar #'theme-anchor-spec-choose
 			;; get the theme-face specs from the theme
-			(theme-archor-get-faces theme)))))
+			(theme-anchor-get-faces theme)))))
 
 
 ;; 
-(defmacro theme-archor-hook-gen (theme &rest other-step)
+(defmacro theme-anchor-hook-gen (theme &rest other-step)
   "Generate hook functions.
 Argument THEME the theme to be applied in the mode hook .
 Optional argument OTHER-STEP the additional steps to execute in the mode hook."
   `(lambda nil
      ;; face-remap current buffer with theme
-     (theme-archor-buffer-local ,theme)
+     (theme-anchor-buffer-local ,theme)
      ;; other sides effect applicable to the current buffer
      ,@other-step))
 
