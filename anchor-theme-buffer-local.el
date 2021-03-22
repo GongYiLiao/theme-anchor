@@ -38,15 +38,15 @@
 (require 'face-remap) 			;; for 'face-remap-set-base'
 
 ;; 
-(defun anchor-theme-get-faces (theme)
+(defun anchor-theme-buffer-local/get-faces (theme)
   "Extract all the theme-face values from THEME."
   ;; take only theme-face specs
-  (cl-remove-if #'(lambda (spec) (not (eq (car spec) 'theme-face)))
+  (cl-remove-if (lambda (spec) (not (eq (car spec) 'theme-face)))
 		;; the theme's all the face/value specs
 		(get theme 'theme-settings)))
 
 ;;
-(defun anchor-theme-spec-choose (face-spec)
+(defun anchor-theme-buffer-local/spec-choose (face-spec)
   "Choose applicable face settings.
 It uses the condition specified in a face spec and use 'face-spec-choose'
 function from face-remap.el
@@ -76,13 +76,13 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
 	;; ignore faces without applicable specs
 	(remove 'nil
 		;; filter out non-applicable specs
-		(mapcar #'anchor-theme-spec-choose
+		(mapcar #'anchor-theme-buffer-local/spec-choose
 			;; get the theme-face specs from the theme
-			(anchor-theme-get-faces theme)))))
+			(anchor-theme-buffer-local/get-faces theme)))))
 
 
 ;; 
-(defmacro anchor-theme-hook-gen (theme &rest other-step)
+(defmacro anchor-theme-buffer-local/hook-gen (theme &rest other-step)
   "Generate hook functions.
 Argument THEME the theme to be applied in the mode hook .
 Optional argument OTHER-STEP the additional steps to execute in the mode hook."

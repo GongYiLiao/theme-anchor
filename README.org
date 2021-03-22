@@ -41,20 +41,20 @@ This package provides
    #+begin_src emacs-lisp
 
      (add-hook 'emacs-lisp-mode-hook
-	       (anchor-theme-hook-gen 'adwaita
-                                      (show-paren-mode t)
-                                      (setq-local show-paren-style 'expression)
-                                      (electric-pair-local-mode t)))
+	       (anchor-theme-buffer-local/hook-gen 'adwaita
+                                                   (show-paren-mode t)
+                                                   (setq-local show-paren-style 'expression)
+                                                   (electric-pair-local-mode t)))
 
    #+end_src 
     
 ** Other functions
 
-*** ~anchor-theme-get-faces~
+*** ~anchor-theme-buffer-local/get-faces~
 
     This function extracts  ~theme-face~ from a custom theme
 
-*** ~anchor-theme-spec-choose~
+*** ~anchor-theme-buffer-local/spec-choose~
 
     This function detects what settings are applicable in a face specification
     like:
