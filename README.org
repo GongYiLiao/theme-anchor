@@ -103,8 +103,9 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
   - +This package does not work well with modes basde on ~emacs-modules~ such+
      +as [[https://github.com/akermu/emacs-libvterm][vterm]] using mode-hook mechanism to set themes. Interactively invoke+
      +~theme-anchor-buffer-local~ still works, but it requires manual+
-     +operation for the time being.+  But setting ANSI color does not work in
-     ~vterm~ when using [[https://fishshell.com/][fish]] (bash works)
+     +operation for the time being.+  Note that setting ANSI color seems  
+     not working in ~vterm~ when using [[https://fishshell.com/][fish]] that is due to fish's setting.
+     Other shells, such as, Bash, do work. Also see [[https://github.com/GongYiLiao/theme-anchor/issues/1][Issue #1]]
   - This package currently does not work well with some add-on themes such as
     [[https://github.com/AnthonyDiGirolamo/airline-themes][airline-themes]]
 
