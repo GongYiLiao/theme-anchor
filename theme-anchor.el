@@ -59,7 +59,7 @@
     (mapc (lambda (spc)
 	    (eval `(setq-local ,(car spc) ,(nth 1 spc)))
 	    (if (eq (car spc) 'ansi-color-names-vector)
-		(setq-local  ansi-color-map (ansi-color-make-color-map))))
+		(setq-local ansi-color-map (ansi-color-make-color-map))))
 	  val-specs)))
 
 
@@ -103,7 +103,6 @@ Optional argument OTHER-STEP the additional steps to execute in the mode hook."
   `(lambda nil
      ;; face-remap current buffer with theme
      (theme-anchor-buffer-local ,theme)
-     (theme-anchor-set-values ,theme)
      ;; other sides effect applicable to the current buffer
      ,@other-step))
 
