@@ -1,4 +1,4 @@
-#+title: =anchor-theme=
+#+title: =theme-anchor=
 #+author: Liāu, Kiong-Gē
 #+email:  gongyi.liao@gmail.com
 
@@ -13,13 +13,13 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
 =emacs='s defintion), each buffer shows its own theme. 
   
 #+CAPTION: Every buffer has it own theme
-#+NAME: fig:Emacs-with-anchor-themes-0 
-[[./Emacs-with-anchor-themes-0.png]]
+#+NAME: fig:Emacs-with-theme-anchors-0 
+[[./Emacs-with-theme-anchors-0.png]]
 
 
 * Functions and macro 
 
-** ~anchor-theme-buffer-local~
+** ~theme-anchor-buffer-local~
 
    This function apply a theme to the current buffer without affecting other buffers.
 
@@ -28,13 +28,13 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
 
    #+begin_src emacs-lisp
 
-     (anchor-theme-buffer-local 'tango)
+     (theme-anchor-buffer-local 'tango)
 
    #+end_src 
 
-   This function supports interactive mode through =M-x anchor-theme-buffer-local=
+   This function supports interactive mode through =M-x theme-anchor-buffer-local=
    
-** ~anchor-theme-hook-gen~
+** ~theme-anchor-hook-gen~
 
    This macro generates functions those can setup mode-specific buffer
    appearance as well as turn on/off some  applicable features. 
@@ -45,7 +45,7 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
    #+begin_src emacs-lisp
 
      (add-hook 'emacs-lisp-mode-hook
-	       (anchor-theme-hook-gen 'adwaita
+	       (theme-anchor-hook-gen 'adwaita
                                       (show-paren-mode t)
                                       (setq-local show-paren-style 'expression)
                                       (electric-pair-local-mode t)))
@@ -54,11 +54,11 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
     
 ** Other functions
 
-*** ~anchor-theme-get-faces~
+*** ~theme-anchor-get-faces~
 
     This function extracts  ~theme-face~ from a custom theme
 
-*** ~anchor-theme-spec-choose~
+*** ~theme-anchor-spec-choose~
 
     This function detects what settings are applicable in a face specification
     like:
@@ -96,13 +96,13 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
      
 * Limitations
 
-  - +The ~anchor-theme-buffer-local~ currently does not support interactivefunction call yet+ 
+  - +The ~theme-anchor-buffer-local~ currently does not support interactivefunction call yet+ 
   - This package can only process ~theme-face~. ~theme-value~, which should be
     only changed via customization interface and that is out of this package's
     scope
   - +This package does not work well with modes basde on ~emacs-modules~ such+
      +as [[https://github.com/akermu/emacs-libvterm][vterm]] using mode-hook mechanism to set themes. Interactively invoke+
-     +~anchor-theme-buffer-local~ still works, but it requires manual+
+     +~theme-anchor-buffer-local~ still works, but it requires manual+
      +operation for the time being.+  But setting ANSI color does not work in
      ~vterm~ when using [[https://fishshell.com/][fish]] (bash works)
   - This package currently does not work well with some add-on themes such as
@@ -112,11 +112,11 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
 
 * Etymology
 
-  This package and its functions' ~anchor-theme~ name prefix is chosen as a 
+  This package and its functions' ~theme-anchor~ name prefix is chosen as a 
   theme gets anchored on a buffer rather than makes the entire ~Emacs~ session
   looks monotonic in style.
    
-  The function =anchor-theme-buffer-local='s name suffix ~-buffer-local~ is borrowed
+  The function =theme-anchor-buffer-local='s name suffix ~-buffer-local~ is borrowed
   from [[https://github.com/vic/color-theme-buffer-local][load-theme-buffer-local]] (which is unfortunately orphaned/looking for
   maintainer now) that I had used since ~Emacs~ version 26.1.
   =load-theme-buffer-local= relies on ~flet~ for dynamic binding but the deprecation
