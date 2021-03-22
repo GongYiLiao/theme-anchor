@@ -1,4 +1,4 @@
-#+title: ~anchor-theme-buffer-local~
+#+title: ~~anchor-theme~-buffer-local~
 #+author: Liāu, Kiong-Gē
 #+email:  gongyi.liao@gmail.com
 
@@ -18,7 +18,7 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
 
 * Functions and macro 
 
-** ~anchor-theme-buffer-local~ 
+** ~anchor-theme-buffer-local~
 
    This function apply a theme to the current buffer without affecting other buffers.
 
@@ -33,7 +33,7 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
 
    This function supports interactive mode through =M-x anchor-theme-buffer-local=
    
-** ~anchor-theme-buffer-local-hook-gen~
+** ~anchor-theme-hook-gen~
 
    This macro generates functions those can setup mode-specific buffer
    appearance as well as turn on/off some  applicable features. 
@@ -44,20 +44,20 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
    #+begin_src emacs-lisp
 
      (add-hook 'emacs-lisp-mode-hook
-	       (anchor-theme-buffer-local-hook-gen 'adwaita
-                                                   (show-paren-mode t)
-                                                   (setq-local show-paren-style 'expression)
-                                                   (electric-pair-local-mode t)))
+	       (anchor-theme-hook-gen 'adwaita
+                                      (show-paren-mode t)
+                                      (setq-local show-paren-style 'expression)
+                                      (electric-pair-local-mode t)))
 
    #+end_src 
     
 ** Other functions
 
-*** ~anchor-theme-buffer-local-get-faces~
+*** ~anchor-theme-get-faces~
 
     This function extracts  ~theme-face~ from a custom theme
 
-*** ~anchor-theme-buffer-local-spec-choose~
+*** ~anchor-theme-spec-choose~
 
     This function detects what settings are applicable in a face specification
     like:
@@ -115,7 +115,6 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
   theme gets anchored on a buffer rather than makes the entire ~Emacs~ session
   looks monotonic in style.
    
-
   The name suffix ~-buffer-local~ is borrowed from [[https://github.com/vic/color-theme-buffer-local][load-theme-buffer-local]] (which
   is unfortunately orphaned/looking for maintainer now) that I had used since ~Emacs~
   version 26.1. =load-theme-buffer-local= relies on ~flet~ for dynamic binding but the
