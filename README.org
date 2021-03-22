@@ -9,7 +9,7 @@ This package provides
 - functions to apply an ~emacs~ [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Custom-Themes.html][custom theme]] to current buffer only
 - a macro to generate side-effect only functions as mode hooks 
 
-The following screenshot shows one frame split into 4 buffers (as /windows/ in
+The following screenshot shows one frame splits into 4 buffers (as /windows/ in
 =emacs='s defintion), each buffer shows its own theme. 
   
 #+CAPTION: Every buffer has it own theme
@@ -21,9 +21,9 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
 
 ** ~theme-anchor-buffer-local~
 
-   This function apply a theme to the current buffer without affecting other buffers.
+   This function applies a theme to the current buffer without affecting other buffers.
 
-   The following example make ~tange~ theme effective in current buffer without
+   The following example makes ~tange~ theme effective in current buffer without
    changing any face settings in other buffers. 
 
    #+begin_src emacs-lisp
@@ -56,7 +56,7 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
 
 *** ~theme-anchor-get-faces~
 
-    This function extracts  ~theme-face~ from a custom theme
+    This function extracts  ~theme-face~'s from a custom theme
 
 *** ~theme-anchor-spec-choose~
 
@@ -97,7 +97,7 @@ The following screenshot shows one frame split into 4 buffers (as /windows/ in
     Get =theme-values='s from a theme
 
 *** =theme-anchor-set-values=
-    Use =setq-local= to set theme values extract from the them in the current buffer only 
+    Use =setq-local= to set =theme-value='s extracted from the them in the current buffer only 
     
 * Limitations
 
