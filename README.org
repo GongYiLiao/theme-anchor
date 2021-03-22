@@ -2,7 +2,7 @@
 #+author: Liāu, Kiong-Gē
 #+email:  gongyi.liao@gmail.com
 
-
+[[https://melpa.org/#/theme-anchor][file:https://melpa.org/packages/theme-anchor-badge.svg]]
 
 This package provides
 
