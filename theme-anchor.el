@@ -85,15 +85,15 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
   ;; 
   (load-theme theme t t)
   ;; set buffer face with
+  ;; set the theme-values as well 
+  (theme-anchor-set-values theme)
   (mapc (lambda (spec) (apply #'face-remap-set-base spec))
 	;; ignore faces without applicable specs
 	(remove 'nil
 		;; filter out non-applicable specs
 		(mapcar #'theme-anchor-spec-choose
 			;; get the theme-face specs from the theme
-			(theme-anchor-get-faces theme))))
-  ;; set the theme-values as well 
-  (theme-anchor-set-values theme))
+			(theme-anchor-get-faces theme)))))
 
 (defmacro theme-anchor-hook-gen (theme &rest other-step)
   "Generate hook functions.
