@@ -56,9 +56,7 @@
 Argument THEME: the theme to extract `theme-value's from"
   (let ((val-specs (theme-anchor-get-values theme)))
     (mapc (lambda (spc)
-	    (eval `(setq-local ,(car spc) ,(nth 1 spc)))
-	    (if (eq (car spc) 'ansi-color-names-vector)
-		(setq-local ansi-color-map (ansi-color-make-color-map))))
+	    (eval `(setq-local ,(car spc) ,(nth 1 spc))))
 	  val-specs)))
 
 (defun theme-anchor-spec-choose (face-spec)
