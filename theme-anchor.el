@@ -26,11 +26,10 @@
 ;;; Commentary:
 
 ;; Using `face-remap's `face-remap-set-base function to set buffer-specific
-;; custom theme
-;; 
+;; custom theme. Using `setq-local' to apply `theme-value's to current 
+;; buffer only
 
 ;;; Code:
-
 (require 'cl-lib)  			;; for 'cl-remove-if'
 (require 'faces) 			;; for 'face-spec-choose'
 (require 'custom) 			;; for 'load-theme'
@@ -52,7 +51,6 @@
 			;; the theme's all the face/value specs
 			(get theme 'theme-settings))))
 
-
 (defun theme-anchor-set-values (theme)
   "Set buffer-local values using theme-values extracted from THEME"
   (let ((val-specs (theme-anchor-get-values theme)))
@@ -61,7 +59,6 @@
 	    (if (eq (car spc) 'ansi-color-names-vector)
 		(setq-local ansi-color-map (ansi-color-make-color-map))))
 	  val-specs)))
-
 
 (defun theme-anchor-spec-choose (face-spec)
   "Choose applicable face settings.
@@ -108,6 +105,4 @@ Optional argument OTHER-STEP the additional steps to execute in the mode hook."
      ,@other-step))
 
 (provide 'theme-anchor)
-
 ;;; theme-anchor.el ends here
-
