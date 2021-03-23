@@ -97,7 +97,8 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
     ;; 1. use face-remap-se-base face `nil' to make global face ignored
     ;; 2. apply the spec as the new base for the buffer 
     (mapc (lambda (spec)
-	    (face-remap-set-base (car spec) nil) ;; cleanup base definition 
+	    ;; attemp to cleanup base definition, seems not usefull 
+	    ;; (face-remap-set-base (car spec) nil)
 	    (apply #'face-remap-set-base spec))	;; anchor the spec as base 
 	  ;; ignore faces without applicable specs
 	  valid-specs)))
