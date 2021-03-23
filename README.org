@@ -110,7 +110,10 @@ The following screenshot shows one frame splits into 4 buffers (as /windows/ in
      +~theme-anchor-buffer-local~ still works, but it requires manual+
      +operation for the time being.+  Note that setting ANSI color seems  
      not working in ~vterm~ when using [[https://fishshell.com/][fish]] that is due to fish's setting.
-     Other shells, such as, Bash, do work. Also see [[https://github.com/GongYiLiao/theme-anchor/issues/1][Issue #1]]
+     Other shells, such as, Bash, do work partially. However, setting =term= and =term-color-*=
+     via =face-remap-set-base= or =face-remap-add-relative=  seems
+     not helpful in =ansi-term= and =vterm=.  =eshell= is less an issue as it has its own faces
+     rather than inherits from =term=. Also see [[https://github.com/GongYiLiao/theme-anchor/issues/1][Issue #1.]] 
   - This package currently does not work well with some add-on themes such as
     [[https://github.com/AnthonyDiGirolamo/airline-themes][airline-themes]]
 
