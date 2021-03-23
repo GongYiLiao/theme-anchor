@@ -36,13 +36,6 @@
 (require 'face-remap) 			;; for 'face-remap-set-base'
 (require 'ansi-color)                   ;; for 'ansi-color-make-color-map
 
-(defun theme-anchor-get-faces (theme)
-  "Extract all the theme-face values from THEME."
-  ;; take only theme-face specs
-  (cl-remove-if (lambda (spec) (not (eq (car spec) 'theme-face)))
-		;; the theme's all the face/value specs
-		(get theme 'theme-settings)))
-
 (defun theme-anchor-get-values (theme)
   "Extract all the theme-face values from THEME."
   ;; take only theme-face specs
@@ -59,6 +52,13 @@ Argument THEME: the theme to extract `theme-value's from"
 	    (eval `(setq-local ,(car spc) ,(nth 1 spc))))
 	  val-specs)))
 
+(defun theme-anchor-get-faces (theme)
+  "Extract all the theme-face values from THEME."
+  ;; take only theme-face specs
+  (cl-remove-if (lambda (spec) (not (eq (car spec) 'theme-face)))
+		;; the theme's all the face/value specs
+		(get theme 'theme-settings)))
+
 (defun theme-anchor-spec-choose (face-spec)
   "Choose applicable face settings.
 It uses the condition specified in a face spec and use 'face-spec-choose'
@@ -72,8 +72,10 @@ Argument FACE-SPEC: the specs to be tested"
 
 (defun theme-anchor-buffer-local (theme)
   "Extract applicable face settings from THEME.
+Argument THEME the theme to be applied in the mode hook .
 It uses 'face-remap-set-base' to load that theme in a buffer local manner"
-  ;; make sure the theme is available
+  ;; make sure the theme is available, copied from custom.el's load-theme
+  ;; definition 
   (interactive
    (list
     (intern (completing-read "Load custom theme: "
@@ -81,18 +83,24 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
 				     (custom-available-themes))))))
   (unless (custom-theme-name-valid-p theme)
     (error "Invalid theme name `%s'" theme))
-  ;; 
+  ;; prepare the theme for face-remap
   (load-theme theme t t)
-  ;; set buffer face with
   ;; set the theme-values as well 
   (theme-anchor-set-values theme)
-  (mapc (lambda (spec) (apply #'face-remap-set-base spec))
-	;; ignore faces without applicable specs
-	(remove 'nil
-		;; filter out non-applicable specs
-		(mapcar #'theme-anchor-spec-choose
-			;; get the theme-face specs from the theme
-			(theme-anchor-get-faces theme)))))
+  ;; choose the most appropriate theme for the environment 
+  (let ((valid-specs
+	 (remove 'nil ;; filter out non-applicable specs
+		 (mapcar #'theme-anchor-spec-choose
+			 ;; get the theme-face specs from the theme
+			 (theme-anchor-get-faces theme)))))
+    ;; make sure the face is set as the buffer's based face by
+    ;; 1. use face-remap-se-base face `nil' to make global face ignored
+    ;; 2. apply the spec as the new base for the buffer 
+    (mapc (lambda (spec)
+	    (face-remap-set-base (car spec) nil) ;; cleanup base definition 
+	    (apply #'face-remap-set-base spec))	;; anchor the spec as base 
+	  ;; ignore faces without applicable specs
+	  valid-specs)))
 
 (defmacro theme-anchor-hook-gen (theme &rest other-step)
   "Generate hook functions.
