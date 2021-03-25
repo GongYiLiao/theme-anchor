@@ -135,8 +135,8 @@ Optional argument OTHER-STEP the additional steps to execute in the mode hook."
      ;; face-remap current buffer with theme
      (theme-anchor-buffer-local ,theme)
      ;; other sides effect applicable to the current buffer
-     ,@other-step)
-  (theme-anchor-set-inherit))
+     ,@other-step
+     (theme-anchor-set-inherit)))
 
 (provide 'theme-anchor)
 ;;; theme-anchor.el ends here
