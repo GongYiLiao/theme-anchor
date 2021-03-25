@@ -70,6 +70,30 @@ Argument FACE-SPEC: the specs to be tested"
 	  ;; the applicable face spec chosen by 'face-spec-choose'
 	  (face-spec-choose face-spec-content))))
 
+(defun theme-anchor-set-inherit (&optional buffer)
+  "Get specs from parent faces using face's inherit attribute.
+This function should only apply after the first stage, e.g.,
+face specs defined in the theme have been applied and a
+buffer-local face-remapping-alist has been properly generate." 
+  (with-current-buffer (if buffer buffer (current-buffer))
+    ;; f-keys are the face specs anchored in current buffer
+    ;; via face-remap-set-base
+    (let ((f-keys (mapcar #'car face-remapping-alist)))
+      (mapc (lambda (spec) (if spec (apply #'face-remap-set-base spec)))
+	    ;; This filter check the following conditions 
+	    ;; 1. the face's spec is derived through :inherit property
+	    ;; 2. if #1 holds, check if the face this face inherit
+	    ;;    from does exist in curent buffer's face-remapping-alist
+	    (mapcar (lambda (fc)
+		      (let ((ihr (face-attribute fc :inherit nil t)))
+			(if (and (not (eq ihr 'unspecified))
+				 (member ihr f-keys))
+			    (list fc (car (alist-get ihr
+						     face-remapping-alist))))))
+		    ;; faces obtain from global face lists  whose names are not
+		    ;;  in current buffer's face-remapping-alist 
+		    (cl-set-difference (face-list) f-keys))))))
+
 (defun theme-anchor-buffer-local (theme)
   "Extract applicable face settings from THEME.
 Argument THEME the theme to be applied in the mode hook .
@@ -101,7 +125,8 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
 	    ;; (face-remap-set-base (car spec) nil)
 	    (apply #'face-remap-set-base spec))	;; anchor the spec as base 
 	  ;; ignore faces without applicable specs
-	  valid-specs)))
+	  valid-specs))
+  (theme-anchor-set-inherit))
 
 (defmacro theme-anchor-hook-gen (theme &rest other-step)
   "Generate hook functions.
