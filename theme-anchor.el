@@ -125,8 +125,7 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
 	    ;; (face-remap-set-base (car spec) nil)
 	    (apply #'face-remap-set-base spec))	;; anchor the spec as base 
 	  ;; ignore faces without applicable specs
-	  valid-specs))
-  (theme-anchor-set-inherit))
+	  valid-specs)))
 
 (defmacro theme-anchor-hook-gen (theme &rest other-step)
   "Generate hook functions.
@@ -136,7 +135,8 @@ Optional argument OTHER-STEP the additional steps to execute in the mode hook."
      ;; face-remap current buffer with theme
      (theme-anchor-buffer-local ,theme)
      ;; other sides effect applicable to the current buffer
-     ,@other-step))
+     ,@other-step)
+  (theme-anchor-set-inherit))
 
 (provide 'theme-anchor)
 ;;; theme-anchor.el ends here
