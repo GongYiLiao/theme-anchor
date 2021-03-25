@@ -91,7 +91,7 @@ and not supposed to use separately"
 					     (member ihr valid-keys))
 					(list fc (car (alist-get ihr valid-specs))))))
 				face-stack)))
-    ;; clean up `nil's 
+    ;; clean up `nil's
     (cl-remove nil inherit-specs)))
 
 (defun theme-anchor-buffer-local (theme)
