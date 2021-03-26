@@ -87,7 +87,8 @@ and not supposed to use separately"
 	 ;;    from does exist in curent buffer's face-remapping-alist
 	 (inherit-specs (mapcar (lambda (fc)
 				  (let ((ihr (face-attribute fc :inherit nil t)))
-				    (if (and (not (eq ihr 'unspecified))
+				    (if (and ihr
+					     (not (eq ihr 'unspecified))
 					     (member ihr valid-keys))
 					(list fc (car (alist-get ihr valid-specs))))))
 				face-stack)))
