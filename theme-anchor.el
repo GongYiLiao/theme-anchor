@@ -48,9 +48,9 @@
   "Set buffer-local values using theme-values extracted from THEME
 Argument THEME: the theme to extract `theme-value's from"
   (let ((val-specs (theme-anchor-get-values theme)))
-    (mapc (lambda (spc)
-	    (eval `(setq-local ,(car spc) ,(nth 1 spc))))
-	  val-specs)))
+    (cl-map nil (lambda (spc)
+		  (eval `(setq-local ,(car spc) ,(nth 1 spc))))
+	    val-specs)))
 
 (defun theme-anchor-get-faces (theme)
   "Extract all the theme-face values from THEME."
@@ -122,12 +122,12 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
     ;; make sure the face is set as the buffer's based face by
     ;; 1. use face-remap-se-base face `nil' to make global face ignored
     ;; 2. apply the spec as the new base for the buffer 
-    (mapc (lambda (spec)
-	    ;; attemp to cleanup base definition, seems not usefull 
-	    ;; (face-remap-set-base (car spec) nil)
-	    (apply #'face-remap-set-base spec))	;; anchor the spec as base 
-	  ;; ignore faces without applicable specs
-	  valid-and-inherit-specs)))
+    (cl-map nil (lambda (spec)
+		  ;; attemp to cleanup base definition, seems not usefull 
+		  ;; (face-remap-set-base (car spec) nil)
+		  (apply #'face-remap-set-base spec))	;; anchor the spec as base 
+	    ;; ignore faces without applicable specs
+	    valid-and-inherit-specs)))
 
 (defmacro theme-anchor-hook-gen (theme &rest other-step)
   "Generate hook functions.
