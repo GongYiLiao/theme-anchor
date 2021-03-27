@@ -30,11 +30,10 @@
 ;; buffer only
 
 ;;; Code:
-(require 'cl-lib)  			;; for `cl-remove-if', `cl-remove', `cl-set-difference'
+(require 'cl-lib)  			;; for `cl-remove-if', `cl-map'
 (require 'faces) 			;; for `face-spec-choose'
 (require 'custom) 			;; for `load-theme'
-(require 'face-remap) 			;; for `face-remap-set-base'
-(require 'ansi-color)                   ;; for `ansi-color-make-color-map'
+(require 'face-remap) 			;; for `face-remap-add-relative'
 
 (defun theme-anchor-get-values (theme)
   "Extract all the theme-face values from THEME."
