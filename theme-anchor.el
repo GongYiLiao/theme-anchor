@@ -69,7 +69,7 @@ Argument FACE-SPEC: the specs to be tested"
 	  ;; the applicable face spec chosen by 'face-spec-choose'
 	  (face-spec-choose face-spec-content))))
 
-(defun theme-anchor-buffer-local-attemp2 (theme)
+(defun theme-anchor-buffer-local (theme)
   "Extract applicable face settings from THEME.
 Argument THEME the theme to be applied in the mode hook .
 It uses 'face-remap-set-base' to load that theme in a buffer local manner"
