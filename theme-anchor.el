@@ -92,10 +92,8 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
 	  (lambda (spec)
 	    (let ((valid-spec (theme-anchor-spec-choose spec)))
 	      (if valid-spec
-		  (apply #'face-remap-set-base valid-spec))))
+		  (apply #'face-remap-add-relative valid-spec))))
 	  (theme-anchor-get-faces theme)))
-
-
 
 (defmacro theme-anchor-hook-gen (theme &rest other-step)
   "Generate hook functions.
