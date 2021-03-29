@@ -62,11 +62,11 @@ It uses the condition specified in a face spec and use 'face-spec-choose'
 function from face-remap.el
 Argument FACE-SPEC: the specs to be tested"
   ;; a face's all applicable specs, along with their applicable conditions
-  (let ((face-spec-content (nth 3 face-spec)))
+  (let ((face-spec-content (face-spec-choose (nth 3 face-spec))))
     (if face-spec-content
 	(list (nth 1 face-spec) ;; the face name
 	      ;; the applicable face spec chosen by 'face-spec-choose'
-	      (face-spec-choose face-spec-content)))))
+	      face-spec-content))))
 
 (defun theme-anchor-buffer-local (theme)
   "Extract applicable face settings from THEME.
