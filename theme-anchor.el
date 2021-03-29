@@ -46,10 +46,8 @@
 (defun theme-anchor-set-values (theme)
   "Set buffer-local values using theme-values extracted from THEME
 Argument THEME: the theme to extract `theme-value's from"
-  (let ((val-specs (theme-anchor-get-values theme)))
-    (cl-map nil (lambda (spc)
-		  (eval `(setq-local ,(car spc) ,(nth 1 spc))))
-	    val-specs)))
+  (dolist (val-spec (theme-anchor-get-values theme))
+    (eval `(setq-local ,(car val-spec) ,(nth 1 val-spec)))))
 
 (defun theme-anchor-get-faces (theme)
   "Extract all the theme-face values from THEME."
@@ -76,10 +74,9 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
   ;; make sure the theme is available, copied from custom.el's load-theme
   ;; definition 
   (interactive
-   (list
-    (intern (completing-read "Load custom theme: "
-                             (mapcar #'symbol-name
-				     (custom-available-themes))))))
+   (list (intern (completing-read "Load custom theme: "
+				  (mapcar #'symbol-name
+					  (custom-available-themes))))))
   (unless (custom-theme-name-valid-p theme)
     (error "Invalid theme name `%s'" theme))
   ;; prepare the theme for face-remap
@@ -87,12 +84,10 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
   ;; set the theme-values as well 
   (theme-anchor-set-values theme) 
   ;; choose the most appropriate theme for the environment
-  (cl-map nil
-	  (lambda (spec)
-	    (let ((valid-spec (theme-anchor-spec-choose spec)))
-	      (if valid-spec
-		  (apply #'face-remap-add-relative valid-spec))))
-	  (theme-anchor-get-faces theme)))
+  (dolist (spec (theme-anchor-get-faces theme))
+    (let ((valid-spec (theme-anchor-spec-choose spec)))
+      (if valid-spec
+	  (apply #'face-remap-add-relative valid-spec)))))
 
 (defmacro theme-anchor-hook-gen (theme &rest other-step)
   "Generate hook functions.
