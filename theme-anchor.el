@@ -63,9 +63,10 @@ function from face-remap.el
 Argument FACE-SPEC: the specs to be tested"
   ;; a face's all applicable specs, along with their applicable conditions
   (let ((face-spec-content (nth 3 face-spec)))
-    (list (nth 1 face-spec) ;; the face name
-	  ;; the applicable face spec chosen by 'face-spec-choose'
-	  (face-spec-choose face-spec-content))))
+    (if face-spec-content
+	(list (nth 1 face-spec) ;; the face name
+	      ;; the applicable face spec chosen by 'face-spec-choose'
+	      (face-spec-choose face-spec-content)))))
 
 (defun theme-anchor-buffer-local (theme)
   "Extract applicable face settings from THEME.
