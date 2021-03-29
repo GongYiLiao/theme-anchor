@@ -87,6 +87,7 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
   ;; choose the most appropriate theme for the environment
   (dolist (spec (theme-anchor-get-faces theme))
     (let ((valid-spec (theme-anchor-spec-choose spec)))
+      ;; if valid specs should be processed 
       (if valid-spec
 	  (apply #'face-remap-add-relative valid-spec)))))
 
