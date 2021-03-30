@@ -34,6 +34,7 @@
 (require 'faces) 			;; for `face-spec-choose'
 (require 'custom) 			;; for `load-theme'
 (require 'face-remap) 			;; for `face-remap-add-relative'
+(require 'ansi-color)  			;; for `ansi-color-make-color-map'
 
 (defun theme-anchor-get-values (theme)
   "Extract all the theme-face values from THEME."
