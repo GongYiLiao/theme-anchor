@@ -46,8 +46,13 @@
 (defun theme-anchor-set-values (theme)
   "Set buffer-local values using theme-values extracted from THEME
 Argument THEME: the theme to extract `theme-value's from"
-  (dolist (val-spec (theme-anchor-get-values theme))
-    (eval `(setq-local ,(car val-spec) ,(nth 1 val-spec)))))
+  (let ((val-specs (theme-anchor-get-values theme)))
+    (with-current-buffer (current-buffer)
+      (dolist (val-spec val-specs)
+	(let ((val-name (car val-spec))
+	      (val-value (nth 1 val-spec)))
+	  (make-variable-buffer-local val-name)
+	  (setq val-name val-value)))) ))
 
 (defun theme-anchor-get-faces (theme)
   "Extract all the theme-face values from THEME."
@@ -86,7 +91,7 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
   ;; set the theme-values as well 
   (theme-anchor-set-values theme) 
   ;; choose the most appropriate theme for the environment
-  (setq-local face-remapping-alist 
+  (setq-local face-remapping-alist 	;
 	      (cl-remove nil
 			 (mapcar #'theme-anchor-spec-choose
 				 (theme-anchor-get-faces theme))))
