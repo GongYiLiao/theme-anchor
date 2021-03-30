@@ -68,6 +68,7 @@ Argument FACE-SPEC: the specs to be tested"
 	      ;; the applicable face spec chosen by 'face-spec-choose'
 	      face-spec-content))))
 
+
 (defun theme-anchor-buffer-local (theme)
   "Extract applicable face settings from THEME.
 Argument THEME the theme to be applied in the mode hook .
@@ -85,11 +86,11 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
   ;; set the theme-values as well 
   (theme-anchor-set-values theme) 
   ;; choose the most appropriate theme for the environment
-  (dolist (spec (theme-anchor-get-faces theme))
-    (let ((valid-spec (theme-anchor-spec-choose spec)))
-      ;; if valid specs should be processed 
-      (if valid-spec
-	  (apply #'face-remap-add-relative valid-spec)))))
+  (setq-local face-remapping-alist 
+	      (cl-remove nil
+			 (mapcar #'theme-anchor-spec-choose
+				 (theme-anchor-get-faces theme))))
+  (force-mode-line-update))
 
 (defmacro theme-anchor-hook-gen (theme &rest other-step)
   "Generate hook functions.
