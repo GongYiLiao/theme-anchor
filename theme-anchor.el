@@ -52,7 +52,10 @@ Argument THEME: the theme to extract `theme-value's from"
 	(let ((val-name (car val-spec))
 	      (val-value (nth 1 val-spec)))
 	  (make-variable-buffer-local val-name)
-	  (setq val-name val-value)))) ))
+	  (if (custom-variable-theme-variable val-name)
+	      (funcall (or (get val-name 'custom-set) 'set-default)
+		       val-name val-value)
+	    (setq val-name val-value)))))))
 
 (defun theme-anchor-get-faces (theme)
   "Extract all the theme-face values from THEME."
