@@ -46,7 +46,8 @@
 (defun theme-anchor-set-values (theme)
   "Set buffer-local values using theme-values extracted from THEME
 Argument THEME: the theme to extract `theme-value's from"
-  (setq-local (cl-reduce #'append (theme-anchor-get-values theme))))
+  (dolist (val-spec (theme-anchor-get-values theme))
+    (eval `(setq-local ,(car val-spec) ,(nth 1 val-spec)))))
 
 (defun theme-anchor-get-faces (theme)
   "Extract all the theme-face values from THEME."
