@@ -90,6 +90,8 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
 	      (cl-remove nil
 			 (mapcar #'theme-anchor-spec-choose
 				 (theme-anchor-get-faces theme))))
+  (if (local-variable-p 'ansi-color-names-vector)
+      (setq-local ansi-color-map (ansi-color-make-color-map)))
   (force-mode-line-update))
 
 (defmacro theme-anchor-hook-gen (theme &rest other-step)
