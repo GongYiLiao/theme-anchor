@@ -70,14 +70,16 @@ Argument FACE-SPEC: the specs to be tested"
 	      ;; the applicable face spec chosen by 'face-spec-choose'
 	      face-spec-content))))
 
-(defun theme-anchor-remove-nil-fgbg (face-plist)
+(defun theme-anchor-remove-nil-fgbg (spec)
   "Remove face with nil foreground/background
 Arugment face-plist: a face plist to have nil bg/fg filtered out"
-  (dolist (fc '(:foreground :background))
-    (if (and (plist-member face-plist fc)
-	     (not (plist-get face-plist fc)))
-	(setq face-plist (org-plist-delete face-plist fc))))
-  face-plist)
+  (let ((spec-name (car spec))
+	(face-plist (nth 1 spec)))
+    (dolist (fc '(:foreground :background))
+      (if (and (plist-member face-plist fc)
+	       (not (plist-get face-plist fc)))
+	  (setq face-plist (org-plist-delete face-plist fc))))
+    (list spec-name face-plist)))
 
 (defun theme-anchor-buffer-local (theme)
   "Extract applicable face settings from THEME.
