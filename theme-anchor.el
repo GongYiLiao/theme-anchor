@@ -35,6 +35,7 @@
 (require 'custom) 			;; for `load-theme'
 (require 'face-remap) 			;; for `face-remap-add-relative'
 (require 'ansi-color)  			;; for `ansi-color-make-color-map'
+(require 'org-macs) 			;; for `org-plist-delete'
 
 (defun theme-anchor-get-values (theme)
   "Extract all the theme-face values from THEME."
@@ -69,6 +70,14 @@ Argument FACE-SPEC: the specs to be tested"
 	      ;; the applicable face spec chosen by 'face-spec-choose'
 	      face-spec-content))))
 
+(defun theme-anchor-remove-nil-fgbg (face-plist)
+  "Remove face with nil foreground/background
+Arugment face-plist: a face plist to have nil bg/fg filtered out"
+  (dolist (fc '(:foreground :background))
+    (if (and (plist-member face-plist fc)
+	     (not (plist-get face-plist fc)))
+	(setq face-plist (org-plist-delete face-plist fc))))
+  face-plist)
 
 (defun theme-anchor-buffer-local (theme)
   "Extract applicable face settings from THEME.
@@ -89,7 +98,9 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
   ;; choose the most appropriate theme for the environment
   (setq-local face-remapping-alist 	;
 	      (cl-remove nil
-			 (mapcar #'theme-anchor-spec-choose
+			 (mapcar (lambda (specs)
+				   (theme-anchor-remove-nil-fgbg
+				    (theme-anchor-spec-choose specs)))
 				 (theme-anchor-get-faces theme))))
   (if (local-variable-p 'ansi-color-names-vector)
       (setq-local ansi-color-map (ansi-color-make-color-map)))
