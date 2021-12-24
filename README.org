@@ -23,7 +23,7 @@ The following screenshot shows one frame splits into 4 buffers (as /windows/ in
 
    This function applies a theme to the current buffer without affecting other buffers.
 
-   The following example makes ~tange~ theme effective in current buffer without
+   The following example makes ~tango~ theme effective in current buffer without
    changing any face settings in other buffers. 
 
    #+begin_src emacs-lisp
