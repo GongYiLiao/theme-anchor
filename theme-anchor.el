@@ -1,6 +1,6 @@
 ;;; theme-anchor.el --- Apply theme in current buffer only -*- lexical-binding: t -*-
  
-;; Copyright (C) 2021 Liāu, Kiong-Gē
+;; Copyright (C) 2021-2022 Liāu, Kiong-Gē
 
 ;; ------------------------------------------------------------------------------
 ;; Author: Liāu, Kiong-Gē <gliao.tw@pm.me>
@@ -36,7 +36,6 @@
 (require 'faces) 			;; for `face-spec-choose'
 (require 'custom) 			;; for `load-theme'
 (require 'face-remap) 			;; for `face-remap-add-relative'
-(require 'ansi-color)  			;; for `ansi-color-make-color-map'
 (require 'org-macs) 			;; for `org-plist-delete'
 
 (defcustom face-impute-alist nil
