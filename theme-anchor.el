@@ -6,6 +6,8 @@
 ;; Author: Liāu, Kiong-Gē <gliao.tw@pm.me>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 ;; Package-Requires: ((emacs "26"))
+;; Package-Version: 20211224.2042
+;; Package-Commit: aad9c0c0c888325cf6f9bb2310677d667b364f21
 ;; Keywords: extensions, lisp, theme
 ;; Homepage: https://github.com/GongYiLiao/theme-anchor
 ;; ------------------------------------------------------------------------------
@@ -26,7 +28,7 @@
 ;;; Commentary:
 
 ;; Using `face-remap's `face-remap-set-base function to set buffer-specific
-;; custom theme. Using `setq-local' to apply `theme-value's to current 
+;; custom theme. Using `setq-local' to apply `theme-value's to current
 ;; buffer only
 
 ;;; Code:
@@ -36,6 +38,12 @@
 (require 'face-remap) 			;; for `face-remap-add-relative'
 (require 'ansi-color)  			;; for `ansi-color-make-color-map'
 (require 'org-macs) 			;; for `org-plist-delete'
+
+(defcustom face-impute-alist nil
+  "A associate list that specify how to apply theme to new
+faces according to themes applied to existing faces."
+  :type '(alist :key-type symbol :value-type symbol)
+  :group 'faces)
 
 (defun theme-anchor-get-values (theme)
   "Extract all the theme-face values from THEME."
@@ -71,8 +79,8 @@ Argument FACE-SPEC: the specs to be tested"
 	      face-spec-content))))
 
 (defun theme-anchor-remove-nil-fgbg (spec)
-  "Remove face with nil foreground/background
-Arugment face-plist: a face plist to have nil bg/fg filtered out"
+  "Remove facse with nil foreground/background
+Arugment SPEC: a face plist to have nil bg/fg filtered out"
   (let ((spec-name (car spec))
 	(face-plist (nth 1 spec)))
     (dolist (fc '(:foreground :background))
@@ -81,12 +89,38 @@ Arugment face-plist: a face plist to have nil bg/fg filtered out"
 	  (setq face-plist (org-plist-delete face-plist fc))))
     (list spec-name face-plist)))
 
+(defun theme-anchor-impute-faces ()
+  "Impute themes into new faces based on existing faces."
+  (if (and (boundp 'face-remapping-alist)
+	   (boundp 'face-impute-alist))
+      (let* ((face-remapping-alist-orig face-remapping-alist)
+	     (face-remapping-keys-orig
+	      (mapcar #'car face-remapping-alist-orig))
+	     (face-impute-spc-valid
+	      (seq-filter
+	       (lambda (spc)
+		 (let ((af (car spc))
+		       (ef (cdr spc)))
+		   (and (cl-find ef face-remapping-keys-orig)
+			(not (cl-find af face-remapping-keys-orig)))))
+	       face-impute-alist))
+	     (face-impute-valid-alist
+	      (if face-impute-spc-valid
+		  (mapcar (lambda (spc)
+			    (let ((k (car spc))
+				  (v (alist-get (cdr spc)
+						face-remapping-alist-orig)))
+			      (cons k v)))
+			  face-impute-spc-valid))))
+	(setq-local face-remapping-alist
+		    (append face-remapping-alist-orig face-impute-valid-alist)))))
+
 (defun theme-anchor-buffer-local (theme)
   "Extract applicable face settings from THEME.
 Argument THEME the theme to be applied in the mode hook .
 It uses 'face-remap-set-base' to load that theme in a buffer local manner"
   ;; make sure the theme is available, copied from custom.el's load-theme
-  ;; definition 
+  ;; definition.
   (interactive
    (list (intern (completing-read "Load custom theme: "
 				  (mapcar #'symbol-name
@@ -98,25 +132,44 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
       (progn 
 	;; set the theme-values as well 
 	(theme-anchor-set-values theme)
-	;; choose the most appropriate theme for the environment
-	(setq-local face-remapping-alist ;
+	(setq-local face-remapping-alist
 		    (cl-remove nil
 			       (mapcar (lambda (specs)
 					 (theme-anchor-remove-nil-fgbg
 					  (theme-anchor-spec-choose specs)))
-				       (theme-anchor-get-faces theme)))) 
+				       (theme-anchor-get-faces theme))))
+	(theme-anchor-impute-faces)
 	(disable-theme theme)
 	(force-mode-line-update))))
 
-(defmacro theme-anchor-hook-gen (theme &rest other-step)
+(defmacro theme-anchor-hook-gen (theme
+				 &rest other-step)
   "Generate hook functions.
 Argument THEME the theme to be applied in the mode hook .
 Optional argument OTHER-STEP the additional steps to execute in the mode hook."
   `(lambda nil
      ;; face-remap current buffer with theme
-     (theme-anchor-buffer-local ,theme)
+     (theme-anchor-buffer-local ,theme) 
      ;; other sides effect applicable to the current buffer
      ,@other-step))
+
+(defun theme-anchor-face-attribute (face attribute &optional frame inherit buffer)
+  "Return the value of FACE's ATTRIBUTE on FRAME or current buffer.
+If the optional arguments FRAME and INHERIT are applicable to the
+fallback function face-attribute-frame-local.
+This function tries to extract `face-remapping-alist' from BUFFER,
+if BUFFER is nil, `current-buffer' is used."
+  ;; get if `face-remapping-alist' exists in buffer and has values
+  (let ((buffer-faces (buffer-local-value
+                           'face-remapping-alist
+                           (or (and buffer (get-buffer buffer))
+                               (current-buffer)))))
+        ;; get face attribute from `face-remapping-alist'
+        (and buffer-faces
+             (plist-get (car (alist-get face buffer-faces))
+                        attribute))))
+
+(advice-add #'face-attribute :before-until #'theme-anchor-face-attribute)
 
 (provide 'theme-anchor)
 ;;; theme-anchor.el ends here
