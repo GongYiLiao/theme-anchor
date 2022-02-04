@@ -28,7 +28,7 @@
 ;;; Commentary:
 
 ;; Using `face-remap's `face-remap-set-base function to set buffer-specific
-;; custom theme. Using `setq-local' to apply `theme-value's to current
+;; custom theme.  Using `setq-local' to apply `theme-value's to current
 ;; buffer only
 
 ;;; Code:
@@ -39,8 +39,8 @@
 (require 'org-macs) 			;; for `org-plist-delete'
 
 (defcustom face-impute-alist nil
-  "A associate list that specify how to apply theme to new
-faces according to themes applied to existing faces."
+  "A associate list that specify how to apply theme to new faces.
+According to themes applied to existing faces."
   :type '(alist :key-type symbol :value-type symbol)
   :group 'faces)
 
@@ -53,7 +53,7 @@ faces according to themes applied to existing faces."
 			(get theme 'theme-settings))))
 
 (defun theme-anchor-set-values (theme)
-  "Set buffer-local values using theme-values extracted from THEME
+  "Set buffer-local values using theme-values extracted from THEME.
 Argument THEME: the theme to extract `theme-value's from"
   (dolist (val-spec (theme-anchor-get-values theme))
     (eval `(setq-local ,(car val-spec) ,(nth 1 val-spec)))))
@@ -78,7 +78,7 @@ Argument FACE-SPEC: the specs to be tested"
 	      face-spec-content))))
 
 (defun theme-anchor-remove-nil-fgbg (spec)
-  "Remove facse with nil foreground/background
+  "Remove facse with nil foreground/background.
 Arugment SPEC: a face plist to have nil bg/fg filtered out"
   (let ((spec-name (car spec))
 	(face-plist (nth 1 spec)))
@@ -128,8 +128,8 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
     (error "Invalid theme name `%s'" theme))
   ;; prepare the theme for face-remap
   (if (load-theme theme t t)
-      (progn 
-	;; set the theme-values as well 
+      (progn
+	;; set the theme-values as well
 	(theme-anchor-set-values theme)
 	(setq-local face-remapping-alist
 		    (cl-remove nil
@@ -144,15 +144,15 @@ It uses 'face-remap-set-base' to load that theme in a buffer local manner"
 (defmacro theme-anchor-hook-gen (theme
 				 &rest other-step)
   "Generate hook functions.
-Argument THEME the theme to be applied in the mode hook .
+Argument THEME the theme to be applied in the mode hook.
 Optional argument OTHER-STEP the additional steps to execute in the mode hook."
   `(lambda nil
      ;; face-remap current buffer with theme
-     (theme-anchor-buffer-local ,theme) 
+     (theme-anchor-buffer-local ,theme)
      ;; other sides effect applicable to the current buffer
      ,@other-step))
 
-(defun theme-anchor-face-attribute (face attribute &optional frame inherit buffer)
+(defun theme-anchor-face-attribute (face attribute &optional _frame _inherit buffer)
   "Return the value of FACE's ATTRIBUTE on FRAME or current buffer.
 If the optional arguments FRAME and INHERIT are applicable to the
 fallback function face-attribute-frame-local.
