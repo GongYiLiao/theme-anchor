@@ -7,7 +7,9 @@
 This package provides
 
 - functions to apply an ~emacs~ [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Custom-Themes.html][custom theme]] to current buffer only
-- a macro to generate side-effect only functions as mode hooks 
+- a macro to generate side-effect only functions as mode hooks
+- a advice function to report attributes of a face in the current buffer, or
+  fallback's to the same face of the current frame
 
 The following screenshot shows one frame splits into 4 buffers (as /windows/ in
 =emacs='s defintion), each buffer shows its own theme. 
@@ -15,6 +17,26 @@ The following screenshot shows one frame splits into 4 buffers (as /windows/ in
 #+CAPTION: Every buffer has it own theme
 #+NAME: fig:Emacs-with-theme-anchors-0 
 [[./Emacs-with-theme-anchors-0.png]]
+
+
+* Configuration
+
+~theme-anchor~ can be configured using ~use-package~:
+
+#+begin_src emacs-lisp
+
+  (use-package theme-anchor
+    :config
+    (setq face-impute-alist '((mode-line-active . mode-line))))
+
+#+end_src 
+
+The variable ~face-impute-alist~ is for the situation that the theme you want to
+apply does not specify some face's attributes (for example, Emacs 29 has a new
+face ~mode-line-active~, which acts like de facto replacement of ~mode-line~
+face, are not supported by most available theme packages at this moment
+(September 2022). In cases like this one, you can use ~face-impute-alist~ alist to
+specify as ~((face-not-specified-in-theme . face-to-be-used-as-a-proxy))~. 
 
 
 * Functions and macro 
