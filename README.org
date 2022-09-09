@@ -123,6 +123,7 @@ specify as ~((face-not-specified-in-theme . face-to-be-used-as-a-proxy))~.
     
 * Limitations
 
+  - Current implementation is unable to process inherited face attributes 
   - +The ~theme-anchor-buffer-local~ currently does not support interactivefunction call yet+ 
   - +This package can only process ~theme-face~. ~theme-value~, which should be+
     +only changed via customization interface and that is out of this package's+
