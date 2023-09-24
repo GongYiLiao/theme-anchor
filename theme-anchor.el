@@ -67,7 +67,7 @@ Argument THEME: the theme to extract `theme-value's from"
 
 (defun theme-anchor-spec-choose (face-spec)
   "Choose applicable face settings.
-It uses the condition specified in a face spec and use 'face-spec-choose'
+It uses the condition specified in a face spec and use `face-spec-choose'
 function from face-remap.el
 Argument FACE-SPEC: the specs to be tested"
   ;; a face's all applicable specs, along with their applicable conditions
@@ -117,7 +117,7 @@ Arugment SPEC: a face plist to have nil bg/fg filtered out"
 (defun theme-anchor-buffer-local (theme)
   "Extract applicable face settings from THEME.
 Argument THEME the theme to be applied in the mode hook .
-It uses 'face-remap-set-base' to load that theme in a buffer local manner"
+It uses `face-remap-set-base' to load that theme in a buffer local manner"
   ;; make sure the theme is available, copied from custom.el's load-theme
   ;; definition.
   (interactive
