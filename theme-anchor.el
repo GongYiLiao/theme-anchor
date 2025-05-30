@@ -144,7 +144,7 @@ It uses `face-remap-set-base' to load that theme in a buffer local manner"
 
 (defmacro theme-anchor-hook-gen (theme
 				 &rest other-step)
-  "Generate hook functions.
+  "Generate hook function body.
 Argument THEME the theme to be applied in the mode hook.
 Optional argument OTHER-STEP the additional steps to execute in the mode hook."
   `(lambda nil
@@ -152,6 +152,13 @@ Optional argument OTHER-STEP the additional steps to execute in the mode hook."
      (theme-anchor-buffer-local ,theme)
      ;; other sides effect applicable to the current buffer
      ,@other-step))
+
+(defun theme-anchor-hkfn-gen (theme
+			      &rest other-step)
+    "Generate hook function callback.
+Argument THEME the theme to be applied in the mode hook.
+Optional argument OTHER-STEP the additional steps to execute in the mode hook."
+    (funcall (eval `(theme-anchor-hook-gen ,theme ,@other-step))))
 
 (defun theme-anchor-face-attribute (face attribute &optional _frame _inherit buffer)
   "Return the value of FACE's ATTRIBUTE on FRAME or current buffer.
@@ -161,13 +168,13 @@ This function tries to extract `face-remapping-alist' from BUFFER,
 if BUFFER is nil, `current-buffer' is used."
   ;; get if `face-remapping-alist' exists in buffer and has values
   (let ((buffer-faces (buffer-local-value
-                           'face-remapping-alist
-                           (or (and buffer (get-buffer buffer))
-                               (current-buffer)))))
-        ;; get face attribute from `face-remapping-alist'
-        (and buffer-faces
-             (plist-get (car (alist-get face buffer-faces))
-                        attribute))))
+                       'face-remapping-alist
+                       (or (and buffer (get-buffer buffer))
+                           (current-buffer)))))
+    ;; get face attribute from `face-remapping-alist'
+    (and buffer-faces
+         (plist-get (car (alist-get face buffer-faces))
+                    attribute))))
 
 (advice-add #'face-attribute :before-until #'theme-anchor-face-attribute)
 
