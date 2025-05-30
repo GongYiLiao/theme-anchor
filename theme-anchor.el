@@ -127,19 +127,20 @@ It uses `face-remap-set-base' to load that theme in a buffer local manner"
   (unless (custom-theme-name-valid-p theme)
     (error "Invalid theme name `%s'" theme))
   ;; prepare the theme for face-remap
-  (if (load-theme theme t t)
-      (progn
-	;; set the theme-values as well
-	(theme-anchor-set-values theme)
-	(setq-local face-remapping-alist
-		    (cl-remove nil
-			       (mapcar (lambda (specs)
-					 (theme-anchor-remove-nil-fgbg
-					  (theme-anchor-spec-choose specs)))
-				       (theme-anchor-get-faces theme))))
-	(theme-anchor-impute-faces)
-	(disable-theme theme)
-	(force-mode-line-update))))
+  (with-current-buffer (current-buffer)
+    (if (load-theme theme t t)
+	(progn
+	  ;; set the theme-values as well
+	  (theme-anchor-set-values theme)
+	  (setq-local face-remapping-alist
+		      (cl-remove nil
+				 (mapcar (lambda (specs)
+					   (theme-anchor-remove-nil-fgbg
+					    (theme-anchor-spec-choose specs)))
+					 (theme-anchor-get-faces theme))))
+	  (theme-anchor-impute-faces)
+	  (disable-theme theme)
+	  (force-mode-line-update)))))
 
 (defmacro theme-anchor-hook-gen (theme
 				 &rest other-step)
