@@ -1,12 +1,12 @@
 ;;; theme-anchor.el --- Apply theme in current buffer only -*- lexical-binding: t -*-
  
-;; Copyright (C) 2021-2022 Liāu, Kiong-Gē
+;; Copyright (C) 2021-2025 Liāu, Kiong-Gē
 
 ;; ------------------------------------------------------------------------------
 ;; Author: Liāu, Kiong-Gē <gliao.tw@pm.me>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 ;; Package-Requires: ((emacs "26"))
-;; Package-Version: 20211224.2042
+;; Package-Version: 20250530.1446
 ;; Package-Commit: aad9c0c0c888325cf6f9bb2310677d667b364f21
 ;; Keywords: extensions, lisp, theme
 ;; Homepage: https://github.com/GongYiLiao/theme-anchor
@@ -158,7 +158,7 @@ Optional argument OTHER-STEP the additional steps to execute in the mode hook."
     "Generate hook function callback.
 Argument THEME the theme to be applied in the mode hook.
 Optional argument OTHER-STEP the additional steps to execute in the mode hook."
-    (funcall (eval `(theme-anchor-hook-gen ,theme ,@other-step))))
+    (funcall (eval `(theme-anchor-hook-gen ',theme ,@other-step))))
 
 (defun theme-anchor-face-attribute (face attribute &optional _frame _inherit buffer)
   "Return the value of FACE's ATTRIBUTE on FRAME or current buffer.
