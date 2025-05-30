@@ -24,13 +24,98 @@ The following screenshot shows one frame splits into 4 buffers (as /windows/ in
 ~theme-anchor~ can be configured using ~use-package~:
 
 #+begin_src emacs-lisp
-
- (use-package theme-anchor
-  :custom
-  (face-impute-alist '((mode-line-active . mode-line)
-  		       (doom-modeline-bar . mode-line)
+  (use-package theme-anchor
+    :commands (theme-anchor-buffer-local theme-anchor-hook-gen)
+    :custom
+    (face-impute-alist '((mode-line-active . mode-line)
   		       (doom-modeline-eldoc . mode-line)
-  		       (doom-modeline-bar-inactive . mode-line-inactive))))
+  		       (doom-modeline-bar . mode-line)
+  		       (doom-modeline-inactive-bar . mode-line-inactive)))
+    :config
+    ;; generate buffer-local theme hooks for GUI
+    (defmacro gui-hook-gen (theme &rest other-steps)
+      "Hook Gen for GUI environment.
+  `THEME' is the theme to apply in GUI, `OTHER-STEPS' are other hooks to apply."
+      `(lambda nil
+         (if window-system
+             (theme-anchor-buffer-local ,theme))
+         ,@other-steps))
+    ;; Generate buffer-local theme hook for programing mode, editing or REPL
+    (defmacro prgmg-face (theme &rest other-steps)
+      "General programming mode face generation.
+  `THEME' is the theme for the mode, `OTHER-STEPS' are the further funs to apply."
+      `(gui-hook-gen ,theme
+                     (show-paren-mode t)
+                     (setq show-paren-style 'expression)
+                     (electric-pair-local-mode t)
+  		   (rainbow-delimiters-mode)
+                     (hl-line-mode t)
+                     ,@other-steps))
+    ;; Generate buffer-local theme hook for programming editing mode
+    (defun prgmg-gen-face (theme &rest other-steps)
+      "General programming mode face.
+  `THEME' is theme to be applied"
+      (funcall (eval `(prgmg-face ',theme
+  				(hs-minor-mode t)
+  				(display-line-numbers-mode t)
+  				,@other-steps))))
+    ;; Generate buffer-local theme hook for REPLs
+    (defun prgmg-gen-repl-face (theme &rest other-steps)
+      "General Program REPL Face.
+  Argument THEME: the theme to be used in the programming mode."
+      (funcall (eval `(prgmg-face ',theme
+  				,@other-steps)))))
+  (use-package lispy
+    :after (theme-anchor)
+    :commands (lispy-mode)
+    :config
+    (defun lisp-face (theme &rest other-steps)
+      "Default Lisp face.
+  `THEME' is the theme to be applied to default Lisp face"
+      (prgmg-gen-face theme
+  		    (lispy-mode t)
+  		    (hs-hide-all)
+  		    other-steps))
+    ;;
+    (defun lisp-repl-face (theme)
+      "Default Lisp REPL face.
+  `THEME' the default face to be applied in LISP REPL."
+      (prgmg-gen-repl-face theme
+  			 (lispy-mode t)))
+    ;; ---- Emacs sLisp ----
+    (defun elisp-face-temp (theme)
+      "Emacs Lisp face template.
+  `THEME' the ."
+      (lisp-face theme))
+    ;;
+    (defun elisp-face ()
+      "Emacs Lisp default face."
+      (elisp-face-temp 'base16-atelier-forest-light))
+    ;;
+    (defun ielisp-face ()
+      "Interaction Lisp Mode face."
+      (elisp-face-temp 'base16-one-light))
+    
+    :hook ((emacs-lisp-mode . elisp-face)
+           (lisp-interaction-mode . ielisp-face))
+    :bind
+    (:map lispy-mode-map
+  	("M-o" . nil)
+  	("M-1" . lispy-string-oneline))
+    :init
+    (package-activate 'lispy))
+  ;; theme for ielm
+  (use-package zenburn-theme
+    :after (lispy)
+    :commands (ielm)
+    :config
+    (defun ielm-face ()
+      "IELM LISP default face."
+      (lisp-repl-face 'zenburn))
+    :hook ((ielm-mode . ielm-face))
+    :init
+    (package-activate 'zenburn-theme))
+
 
 #+end_src 
 
