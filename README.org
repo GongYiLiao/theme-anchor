@@ -25,12 +25,12 @@ The following screenshot shows one frame splits into 4 buffers (as /windows/ in
 
 #+begin_src emacs-lisp
 
-  (use-package theme-anchor
-    :custom
-    (face-impute-alist '((mode-line-active . mode-line)
-  			             (doom-modeline-bar . mode-line)
-  			             (doom-modeline-eldoc . mode-line)  				     
-  				     (doom-modeline-bar-inactive . mode-line-inactive))))
+ (use-package theme-anchor
+  :custom
+  (face-impute-alist '((mode-line-active . mode-line)
+  		       (doom-modeline-bar . mode-line)
+  		       (doom-modeline-eldoc . mode-line)
+  		       (doom-modeline-bar-inactive . mode-line-inactive))))
 
 #+end_src 
 
