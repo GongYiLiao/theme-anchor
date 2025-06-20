@@ -1,6 +1,7 @@
 #+title: =theme-anchor=
 #+author: Liāu, Kiong-Gē
 #+email:  gongyi.liao@gmail.com
+#+STARTUP: overview
 
 [[https://melpa.org/#/theme-anchor][file:https://melpa.org/packages/theme-anchor-badge.svg]]
 

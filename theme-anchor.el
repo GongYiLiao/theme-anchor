@@ -114,6 +114,7 @@ Arugment SPEC: a face plist to have nil bg/fg filtered out"
 	(setq-local face-remapping-alist
 		    (append face-remapping-alist-orig face-impute-valid-alist)))))
 
+;;;###autoload
 (defun theme-anchor-buffer-local (theme)
   "Extract applicable face settings from THEME.
 Argument THEME the theme to be applied in the mode hook .
@@ -153,12 +154,13 @@ Optional argument OTHER-STEP the additional steps to execute in the mode hook."
      ;; other sides effect applicable to the current buffer
      ,@other-step))
 
+;;;###autoload
 (defun theme-anchor-hkfn-gen (theme
 			      &rest other-step)
-    "Generate hook function callback.
+  "Generate hook function callback.
 Argument THEME the theme to be applied in the mode hook.
 Optional argument OTHER-STEP the additional steps to execute in the mode hook."
-    (funcall (eval `(theme-anchor-hook-gen ',theme ,@other-step))))
+  (funcall (eval `(theme-anchor-hook-gen ',theme ,@other-step))))
 
 (defun theme-anchor-face-attribute (face attribute &optional _frame _inherit buffer)
   "Return the value of FACE's ATTRIBUTE on FRAME or current buffer.
